@@ -1,3 +1,9 @@
+# Author: Benjamin Noriega
+# CSC 346 Cloud Computing - Russell Lewis
+# Lab 7 - Google App Engine
+# File : app.yaml
+# Date: November 15th, 2019
+
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -6,4 +12,7 @@ handlers:
 - url: /.*
   script: main.app
   secure: always
-  
+
+libraries:
+- name: MySQLdb
+  version: "latest"
