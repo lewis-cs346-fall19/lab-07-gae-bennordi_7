@@ -6,6 +6,19 @@
 
 import cgi, json, MySQLdb, passwords, random, webapp2
 
+def get_json(conn):
+	cursor = conn.cursor()
+    
+	cursor.execute('SELECT * FROM people')
+	response = cursor.fetchall()
+
+	res_json = json.dumps([{'id': p[0], 'name': p[1]} for p in response], indent = 2)
+
+	return res_json, cursor
+
+def check(cookie):
+
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
@@ -16,16 +29,9 @@ class MainPage(webapp2.RequestHandler):
 			passwd = passwords.SQL_PASSWD,
 			db = users)
 
-		curs_1 = conn.cursor()
-        
-		curs_1.execute('SELECT * FROM people')
-		response = curs_1.fetchall()
+        json, cursor = get_cookie(conn)
 
-		res_json = json.dumps([{'id': p[0], 'name': p[1]} for p in response], indent = 2)
-
-		curs_1.close()
-
-		cookie = self.request.cookies.get('cookie1')
+        cookie = self.request.cookies.get('cookie1')
 
 		if cookie is None:
 			id = '%032x' % random.getrandbits(128)
