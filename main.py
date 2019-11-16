@@ -5,6 +5,4 @@ class MainPage(webapp2.RequestHandler):
 		self.response.header[“Content-Type”] = “text/html”
 		self.response.write(“Hello world”)
 
-app = webapp2.WSGIApplication([
-	(“/”, MainPage),
-	], debug=True)
+app = webapp2.WSGIApplication([(“/”, MainPage),], debug=True)
